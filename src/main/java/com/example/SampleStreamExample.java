@@ -54,7 +54,7 @@ public class SampleStreamExample {
 		//we ensure stream and underlying file closes using Java7 try w/ resources stmt
 		try (Stream<String> stream = Files.lines(Paths.get(fileurl.toURI()), StandardCharsets.UTF_8)) {
 			stream.forEach(sb::append);
-			
+			String script = "Java.asJSONCompatible(" + sb.toString() + ")"; //requires 8u60 or later
 			Map<String, String> contents = (Map<String, String>) engine.eval(script);
 			requireNonNull(contents, "Could not read contents of twitter-auth.json properly");
 			consumerKey = contents.get("consumerKey");
